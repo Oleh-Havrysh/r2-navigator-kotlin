@@ -35,7 +35,6 @@ import org.readium.r2.shared.publication.Locator
 import java.io.IOException
 import java.io.InputStream
 
-
 class R2EpubPageFragment : Fragment() {
 
     private val resourceUrl: String?
@@ -180,7 +179,7 @@ class R2EpubPageFragment : Fragment() {
                     }
 
                 }
-                webView.listener.onPageLoaded()
+                webView.listener.onPageReady()
 
             }
 

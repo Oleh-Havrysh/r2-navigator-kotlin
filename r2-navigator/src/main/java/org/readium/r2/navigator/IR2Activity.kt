@@ -38,6 +38,7 @@ interface IR2Activity {
     fun onPageChanged(pageIndex: Int, totalPages: Int, url: String) {}
     fun onPageEnded(end: Boolean) {}
     fun onPageLoaded() {}
+    fun onPageReady() {}
     fun highlightActivated(id: String) {}
     fun highlightAnnotationMarkActivated(id: String) {}
     fun progressionDidChange(progression: Double) {}
