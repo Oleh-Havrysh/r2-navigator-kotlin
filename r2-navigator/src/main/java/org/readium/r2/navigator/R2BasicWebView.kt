@@ -15,7 +15,6 @@ import android.text.Html
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.webkit.WebView
 import android.widget.ImageButton
 import android.widget.ListPopupWindow
@@ -73,18 +72,7 @@ open class R2BasicWebView(context: Context, attrs: AttributeSet) : WebView(conte
     @android.webkit.JavascriptInterface
     open fun scrollRight(animated: Boolean = false) {
         uiScope.launch {
-            activity.supportActionBar?.let {
-                if (it.isShowing && listener.allowToggleActionBar) {
-                    listener.resourcePager?.systemUiVisibility = (
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            or View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                            or View.SYSTEM_UI_FLAG_IMMERSIVE
-                        )
-                }
-            }
+            listener.setActionBarVisible(false)
             val scrollMode = listener.preferences.getBoolean(SCROLL_REF, false)
             if (scrollMode) {
                 if (listener.publication.contentLayout.readingProgression == ReadingProgression.RTL) {
@@ -108,18 +96,7 @@ open class R2BasicWebView(context: Context, attrs: AttributeSet) : WebView(conte
     @android.webkit.JavascriptInterface
     open fun scrollLeft(animated: Boolean = false) {
         uiScope.launch {
-            activity.supportActionBar?.let {
-                if (it.isShowing && listener.allowToggleActionBar) {
-                    listener.resourcePager?.systemUiVisibility = (
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            or View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                            or View.SYSTEM_UI_FLAG_IMMERSIVE
-                        )
-                }
-            }
+            listener.setActionBarVisible(false)
             val scrollMode = listener.preferences.getBoolean(SCROLL_REF, false)
             if (scrollMode) {
                 if (listener.publication.contentLayout.readingProgression == ReadingProgression.RTL) {

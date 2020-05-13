@@ -33,6 +33,7 @@ interface IR2Activity {
 
     fun toggleActionBar() {}
     fun toggleActionBar(v: View? = null) {}
+    fun setActionBarVisible(isVisible: Boolean) {}
     fun nextResource(v: View? = null) {}
     fun previousResource(v: View? = null) {}
     fun onPageChanged(pageIndex: Int, totalPages: Int, url: String) {}
