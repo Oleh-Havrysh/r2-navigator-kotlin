@@ -380,19 +380,27 @@ open class R2EpubActivity : AppCompatActivity(), IR2Activity, IR2Selectable, IR2
     }
 
     override fun toggleActionBar() {
+        setActionBarVisible(supportActionBar?.isShowing == false)
+    }
+
+    override fun setActionBarVisible(isVisible: Boolean) {
         if (allowToggleActionBar) {
             launch {
-                if (supportActionBar!!.isShowing) {
-                    resourcePager.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            or View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                            or View.SYSTEM_UI_FLAG_IMMERSIVE)
+                if (isVisible) {
+                    resourcePager.systemUiVisibility = (
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            )
                 } else {
-                    resourcePager.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+                    resourcePager.systemUiVisibility = (
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                    or View.SYSTEM_UI_FLAG_FULLSCREEN
+                                    or View.SYSTEM_UI_FLAG_IMMERSIVE
+                            )
                 }
             }
         }
