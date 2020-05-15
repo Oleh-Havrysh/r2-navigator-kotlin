@@ -223,10 +223,11 @@ open class R2BasicWebView(context: Context, attrs: AttributeSet) : WebView(conte
         this.evaluateJavascript("setScrollMode($scrollMode)", null)
     }
 
-    fun setProperty(key: String, value: String) {
+    fun setProperty(key: String, value: String) = setProperty(key, value, listener::onPageLoaded)
+
+    fun setProperty(key: String, value: String, onPropertyApplied: () -> Unit) {
         this.evaluateJavascript("setProperty(\"$key\", \"$value\");") {
-            // Used to redraw highlights when user settings changed.
-            listener.onPageLoaded()
+            onPropertyApplied()
         }
     }
 
