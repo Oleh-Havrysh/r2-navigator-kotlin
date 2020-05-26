@@ -19,6 +19,8 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.ActionMode
 import android.view.View
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import kotlinx.coroutines.*
@@ -572,5 +574,6 @@ open class R2EpubActivity : AppCompatActivity(), IR2Activity, IR2Selectable, IR2
         super.onPageLoaded()
     }
 
+    open fun getWebviewClient(webViewClient: WebViewClient) = webViewClient
 }
 
