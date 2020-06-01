@@ -123,7 +123,7 @@ class R2EpubPageFragment : Fragment() {
             }
         })
 
-        webView.webViewClient = object : WebViewClientCompat() {
+        val webViewClient = object : WebViewClientCompat() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 if (!request.hasGesture()) return false
                 return if (webView.overrideUrlLoading) {
@@ -219,9 +219,11 @@ class R2EpubPageFragment : Fragment() {
                 }
 
             }
-
-
         }
+        (activity as? R2EpubActivity)
+            ?.getWebviewClient(webViewClient)
+            ?.let { webView.webViewClient = it }
+
         webView.isHapticFeedbackEnabled = false
         webView.isLongClickable = false
         webView.setOnLongClickListener {
