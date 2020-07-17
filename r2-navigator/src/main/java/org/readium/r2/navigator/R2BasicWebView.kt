@@ -30,7 +30,6 @@ import org.readium.r2.shared.SCROLL_REF
 import org.readium.r2.shared.getAbsolute
 import org.readium.r2.shared.publication.ReadingProgression
 
-
 /**
  * Created by Aferdita Muriqi on 12/2/17.
  */
@@ -201,6 +200,13 @@ open class R2BasicWebView(context: Context, attrs: AttributeSet) : WebView(conte
     fun highlightAnnotationMarkActivated(id: String) {
         uiScope.launch {
             listener.highlightAnnotationMarkActivated(id)
+        }
+    }
+
+    @android.webkit.JavascriptInterface
+    fun onImageClicked(imagePath: String) {
+        uiScope.launch {
+            listener.onImageClicked(imagePath)
         }
     }
 
