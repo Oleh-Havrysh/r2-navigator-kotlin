@@ -27,11 +27,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.webkit.WebViewClientCompat
+import org.json.JSONArray
 import org.readium.r2.navigator.*
 import org.readium.r2.navigator.epub.R2EpubActivity
 import org.readium.r2.shared.APPEARANCE_REF
+import org.readium.r2.shared.LocatorText
 import org.readium.r2.shared.SCROLL_REF
 import org.readium.r2.shared.publication.Locator
+import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 
@@ -45,6 +48,8 @@ class R2EpubPageFragment : Fragment() {
 
     lateinit var webView: R2WebView
     lateinit var listener: IR2Activity
+
+    var searchQueryJs: String? = null
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -166,14 +171,8 @@ class R2EpubPageFragment : Fragment() {
                                 currentFragment.webView.scrollToPosition(progression)
 
                             } else {
-                                // FIXME: We need a better way to wait, because if the value is too low it fails
-                                (object : CountDownTimer(200, 1) {
-                                    override fun onTick(millisUntilFinished: Long) {}
-                                    override fun onFinish() {
-                                        currentFragment.webView.calculateCurrentItem()
-                                        currentFragment.webView.setCurrentItem(currentFragment.webView.mCurItem, false)
-                                    }
-                                }).start()
+                                currentFragment.webView.calculateCurrentItem()
+                                currentFragment.webView.setCurrentItem(currentFragment.webView.mCurItem, false)
                             }
                         }
                     }
@@ -181,6 +180,30 @@ class R2EpubPageFragment : Fragment() {
                 }
                 webView.listener.onPageReady()
 
+                if (searchQueryJs != null) {
+                    webView.evaluateJavascript(searchQueryJs) { result ->
+                        Timber.d("Search performed")
+                        searchQueryJs = null
+
+                        if (result != "null") {
+                            val locators = JSONArray(result)
+                            if (result.isNotEmpty()) {
+                                for (index in 0 until locators.length()) {
+                                    //Building Locators Objects
+                                    val locator = locators.getJSONObject(index)
+                                    val href = locator.getString("href")
+                                    val type = locator.getString("type")
+                                    val title = locator.getString("title")
+                                    val text = LocatorText.fromJSON(locator.getJSONObject("text"))
+                                    val location =
+                                        Locator.Locations.fromJSON(locator.getJSONObject("locations"))
+
+                                    Timber.d("Search: $locator $href $type $title $text $location")
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             // prevent favicon.ico to be loaded, this was causing NullPointerException in NanoHttp
