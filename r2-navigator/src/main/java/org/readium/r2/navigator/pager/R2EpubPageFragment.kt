@@ -143,9 +143,9 @@ class R2EpubPageFragment : Fragment() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
 
-                val currentFragment: R2EpubPageFragment = (webView.listener.resourcePager?.adapter as R2PagerAdapter).getCurrentFragment() as R2EpubPageFragment
+                val currentFragment: R2EpubPageFragment? = (webView.listener.resourcePager?.adapter as R2PagerAdapter).getCurrentFragment() as? R2EpubPageFragment
 
-                if (this@R2EpubPageFragment.tag == currentFragment.tag) {
+                if (this@R2EpubPageFragment.tag == currentFragment?.tag) {
                     val epubNavigator = (webView.navigator as? R2EpubActivity)
                     var locations = epubNavigator?.pendingLocator?.locations
                     epubNavigator?.pendingLocator = null
@@ -159,19 +159,19 @@ class R2EpubPageFragment : Fragment() {
 
                     if (locations != null && locations.fragments.isEmpty()) {
                         locations.progression?.let { progression ->
-                            currentFragment.webView.progression = progression
+                            currentFragment?.webView?.progression = progression
 
                             if (webView.listener.preferences.getBoolean(SCROLL_REF, false)) {
 
-                                currentFragment.webView.scrollToPosition(progression)
+                                currentFragment?.webView?.scrollToPosition(progression)
 
                             } else {
                                 // FIXME: We need a better way to wait, because if the value is too low it fails
                                 (object : CountDownTimer(200, 1) {
                                     override fun onTick(millisUntilFinished: Long) {}
                                     override fun onFinish() {
-                                        currentFragment.webView.calculateCurrentItem()
-                                        currentFragment.webView.setCurrentItem(currentFragment.webView.mCurItem, false)
+                                        currentFragment?.webView?.calculateCurrentItem()
+                                        currentFragment?.webView?.setCurrentItem(currentFragment.webView.mCurItem, false)
                                     }
                                 }).start()
                             }
