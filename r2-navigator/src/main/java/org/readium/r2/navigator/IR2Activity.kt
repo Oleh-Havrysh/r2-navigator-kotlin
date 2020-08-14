@@ -43,6 +43,8 @@ interface IR2Activity {
     fun highlightActivated(id: String) {}
     fun highlightAnnotationMarkActivated(id: String) {}
     fun progressionDidChange(progression: Double) {}
+    fun onVideoClicked(videoPath: String) {}
+    fun onAudioClicked(audioPath: String) {}
 }
 
 interface IR2TTS {

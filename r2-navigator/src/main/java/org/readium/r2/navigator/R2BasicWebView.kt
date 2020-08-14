@@ -30,7 +30,6 @@ import org.readium.r2.shared.SCROLL_REF
 import org.readium.r2.shared.getAbsolute
 import org.readium.r2.shared.publication.ReadingProgression
 
-
 /**
  * Created by Aferdita Muriqi on 12/2/17.
  */
@@ -204,6 +203,19 @@ open class R2BasicWebView(context: Context, attrs: AttributeSet) : WebView(conte
         }
     }
 
+    @android.webkit.JavascriptInterface
+    fun onVideoClicked(videoPath: String) {
+        uiScope.launch {
+            listener.onVideoClicked(videoPath)
+        }
+    }
+
+    @android.webkit.JavascriptInterface
+    fun onAudioClicked(audioPath: String) {
+        uiScope.launch {
+            listener.onAudioClicked(audioPath)
+        }
+    }
 
     fun Boolean.toInt() = if (this) 1 else 0
 
