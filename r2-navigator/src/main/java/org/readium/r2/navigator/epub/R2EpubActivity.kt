@@ -245,7 +245,7 @@ open class R2EpubActivity : AppCompatActivity(), IR2Activity, IR2Selectable, IR2
 
         title = null
 
-        val port = preferences.getString("$publicationIdentifier-publicationPort", 0.toString())?.toInt()
+        val port = preferences.getString("port", 0.toString())?.toInt()
 
         // TODO needs work, currently showing two resources for fxl, needs to understand which two resources, left & right, or only right etc.
         var doublePageIndex = 0
